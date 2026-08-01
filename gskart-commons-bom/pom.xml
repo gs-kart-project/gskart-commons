@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Deliberately has no parent. An imported pom contributes its *effective* dependency
+	     management, so inheriting the reactor (and through it the Spring Boot parent) would push
+	     every version Spring Boot manages into whichever project imports this BOM, and would make
+	     resolving the BOM depend on resolving the parent as well. A BOM should manage only what it
+	     owns. The reactor still builds it, since that comes from <modules>. -->
+	<groupId>com.gskart</groupId>
+	<artifactId>gskart-commons-bom</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>gskart-commons-bom</name>
+	<description>Dependency management for the gskart-commons modules</description>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-messaging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-observability</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.gskart</groupId>
+				<artifactId>commons-caching</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

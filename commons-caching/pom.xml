@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gskart</groupId>
+		<artifactId>gskart-commons</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>commons-caching</artifactId>
+	<name>commons-caching</name>
+	<description>Spring Cache conventions shared by the services</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- Redis is the cache today; a service caching somewhere else still gets the error handler
+		     and the switch, and just doesn't get the Redis defaults. Swapping the cache technology
+		     means swapping the CacheManager, which is Spring's own seam - this module deliberately
+		     adds no port of its own. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-data-redis</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- Cached values are stored as JSON so they can be read and inspected outside the service;
+		     optional because that only applies to the Redis defaults. -->
+		<dependency>
+			<groupId>tools.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.7</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.gskart</groupId>
+	<artifactId>gskart-commons</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>gskart-commons</name>
+	<description>Shared cross-cutting library for the GS Kart services</description>
+
+	<modules>
+		<module>gskart-commons-bom</module>
+		<module>commons-domain</module>
+		<module>commons-security</module>
+		<module>commons-web</module>
+		<module>commons-messaging</module>
+		<module>commons-logging</module>
+		<module>commons-observability</module>
+		<module>commons-caching</module>
+	</modules>
+
+	<properties>
+		<java.version>25</java.version>
+		<jacoco.version>0.8.15</jacoco.version>
+		<springdoc.version>3.0.0</springdoc.version>
+		<!-- The Boot parent points the jar plugin's Main-Class at ${start-class}. These are library
+		     jars with no main class, so binding it to empty keeps the entry out of the manifest. -->
+		<start-class/>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- springdoc isn't managed by Spring Boot; auth pins the same version. -->
+			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-starter-common</artifactId>
+				<version>${springdoc.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>25</source>
+					<target>25</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+						<!-- Has to live here rather than in the dependencies: once
+						     annotationProcessorPaths is set, the compiler stops picking up
+						     processors from the classpath, so a plain dependency would generate
+						     no configuration metadata at all. -->
+						<path>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!-- Coverage gate: 85% line and branch per module. Declared here and switched on by
+				     each library module, so the aggregator and the BOM never run it. -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+					<executions>
+						<execution>
+							<id>prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>check-coverage</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>check</goal>
+							</goals>
+							<configuration>
+								<!-- These are class-file path patterns handled by the plugin itself.
+								     Package globs inside a BUNDLE rule's <includes> are matched
+								     against the bundle name instead, which silently disables the
+								     whole rule. -->
+								<excludes>
+									<exclude>**/*Properties.class</exclude>
+									<exclude>**/ClaimNames.class</exclude>
+									<exclude>**/package-info.class</exclude>
+								</excludes>
+								<rules>
+									<rule>
+										<element>BUNDLE</element>
+										<limits>
+											<limit>
+												<counter>LINE</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.85</minimum>
+											</limit>
+											<limit>
+												<counter>BRANCH</counter>
+												<value>COVEREDRATIO</value>
+												<minimum>0.85</minimum>
+											</limit>
+										</limits>
+									</rule>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
