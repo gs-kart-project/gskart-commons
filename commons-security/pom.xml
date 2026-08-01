@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gskart</groupId>
+		<artifactId>gskart-commons</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>commons-security</artifactId>
+	<name>commons-security</name>
+	<description>Resource-server JWT user context and the shared HttpSecurity baseline</description>
+
+	<dependencies>
+		<!-- Not optional: this module is meaningless without a resource server, and making it
+		     optional would let it back off silently in a service that forgot the dependency - which
+		     reads as "no authentication" with no error anywhere. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-security-oauth2-resource-server</artifactId>
+		</dependency>
+		<!-- Needed even though the artifact above looks like it covers it: that one declares
+		     spring-boot-security at runtime scope, so HttpSecurity, Customizer, SessionCreationPolicy
+		     and AbstractHttpConfigurer are not on the compile classpath without this. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gskart</groupId>
+		<artifactId>gskart-commons</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>commons-domain</artifactId>
+	<name>commons-domain</name>
+	<description>Overridable base classes for entities and DTOs</description>
+
+	<dependencies>
+		<!-- The only dependency this module has, and it stays out of the consumer's graph. A service
+		     that doesn't use JPA can still extend these classes: the JVM ignores annotations whose
+		     types are missing. -->
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Everything here is Lombok-generated, so the gate has nothing to measure yet and
+			     passes on an empty bundle. It stays switched on so it starts biting the moment
+			     hand-written code lands. -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
