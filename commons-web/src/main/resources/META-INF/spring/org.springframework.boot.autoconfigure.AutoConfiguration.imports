@@ -1,0 +1,2 @@
+com.gskart.commons.web.autoconfigure.CommonsWebAutoConfiguration
+com.gskart.commons.web.autoconfigure.CommonsOpenApiAutoConfiguration
