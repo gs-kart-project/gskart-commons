@@ -1,0 +1,4 @@
+# Registered here rather than as an auto-configuration: logging is initialised before any bean
+# exists, so the format has to be settled while the environment is still being prepared.
+org.springframework.boot.EnvironmentPostProcessor=\
+com.gskart.commons.logging.StructuredLoggingEnvironmentPostProcessor
