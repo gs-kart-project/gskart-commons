@@ -1,0 +1,15 @@
+# This repo is LF throughout. The service repos carry a mix of CRLF and LF files, which makes
+# copied code show up as a whole-file rewrite; normalising here keeps that out of the library.
+* text=auto eol=lf
+
+# Windows scripts have to keep CRLF or cmd.exe mis-parses them.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+mvnw text eol=lf
+
+*.jar binary
+*.war binary
+*.zip binary
+*.tar.gz binary
+*.p12 binary
+*.jks binary
