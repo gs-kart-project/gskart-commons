@@ -9,10 +9,8 @@ package com.gskart.commons.security;
  */
 public final class ClaimNames {
 
-    /** Subject - the username the token was issued for. */
     public static final String SUB = "sub";
 
-    /** Email address of the authenticated user. */
     public static final String EMAIL = "email";
 
     /** Flat list of role names, mapped straight onto authorities without a prefix. */

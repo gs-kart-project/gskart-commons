@@ -13,7 +13,6 @@ import lombok.ToString;
 @Builder
 @ToString
 public class DomainEvent {
-    /** Where the event goes - a Kafka topic today. */
     private final String destination;
     /** Ordering key: events sharing a key keep their relative order. */
     private final String key;
