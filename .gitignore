@@ -41,7 +41,3 @@ build/
 *.war
 *.zip
 *.tar.gz
-!.mvn/wrapper/maven-wrapper.jar
-
-# Local-only tracking doc (project docs/tracker stay uncommitted)
-TRACKER.md
